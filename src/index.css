@@ -1,0 +1,572 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --app-font-scale: 1;
+    /* Centralized Design Token System (Apple Health × Linear × Modern SaaS) */
+    --bg-app: #fbfbfa;
+    --bg-surface: #ffffff;
+    --bg-surface-subtle: #f8fafc;
+    --bg-surface-elevated: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border-subtle: #f1f5f9;
+    --border-default: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --accent-teal: #0d9488;
+    --accent-teal-subtle: #f0fdfa;
+    --accent-teal-hover: #0f766e;
+    --shadow-subtle: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+    --shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+    --shadow-elevated: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-normal: 200ms;
+
+    /* Refined Soft Translucent Healthcare Glass Tokens (Light Mode) */
+    --glass-bg-hero: rgba(255, 255, 255, 0.58);
+    --glass-bg-card: rgba(255, 255, 255, 0.65);
+    --glass-bg-content: rgba(255, 255, 255, 0.74);
+    --glass-bg-subtle: rgba(255, 255, 255, 0.46);
+    --glass-bg-input: rgba(255, 255, 255, 0.82);
+
+    --glass-border-hero: rgba(255, 255, 255, 0.88);
+    --glass-border-card: rgba(255, 255, 255, 0.75);
+    --glass-border-subtle: rgba(255, 255, 255, 0.55);
+    --glass-border-hover: rgba(13, 148, 136, 0.45);
+
+    --glass-blur-sm: 8px;
+    --glass-blur-md: 14px;
+    --glass-blur-lg: 20px;
+
+    --glass-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px -1px rgba(15, 23, 42, 0.02);
+    --glass-shadow-hover: 0 14px 32px -6px rgba(13, 148, 136, 0.09), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+  }
+  
+  html {
+    font-size: calc(16px * var(--app-font-scale));
+    scroll-behavior: smooth;
+    background-color: var(--bg-app);
+  }
+
+  body {
+    background: radial-gradient(circle at 18% 12%, rgba(13, 148, 136, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 82% 48%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 25% 78%, rgba(99, 102, 241, 0.05) 0%, transparent 48%),
+                #fbfbfa;
+    color: #0f172a;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  /* Coherent Global Dark Mode Design System (Deep Charcoal/Navy, intentionally designed) */
+  html.dark {
+    --bg-app: #090d16;
+    --bg-surface: #111827;
+    --bg-surface-subtle: #0f172a;
+    --bg-surface-elevated: #162033;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-subtle: #1e293b;
+    --border-default: #26334d;
+    --border-strong: #334155;
+    --accent-teal: #14b8a6;
+    --accent-teal-subtle: rgba(20, 184, 166, 0.12);
+    --accent-teal-hover: #2dd4bf;
+    --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+    --shadow-elevated: 0 12px 30px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+
+    /* Refined Soft Translucent Healthcare Glass Tokens (Dark Mode) */
+    --glass-bg-hero: rgba(17, 24, 39, 0.55);
+    --glass-bg-card: rgba(15, 23, 42, 0.64);
+    --glass-bg-content: rgba(15, 23, 42, 0.74);
+    --glass-bg-subtle: rgba(15, 23, 42, 0.45);
+    --glass-bg-input: rgba(15, 23, 42, 0.80);
+
+    --glass-border-hero: rgba(255, 255, 255, 0.15);
+    --glass-border-card: rgba(255, 255, 255, 0.10);
+    --glass-border-subtle: rgba(255, 255, 255, 0.06);
+    --glass-border-hover: rgba(20, 184, 166, 0.45);
+
+    --glass-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.40);
+    --glass-shadow-hover: 0 16px 36px -6px rgba(0, 0, 0, 0.60), 0 6px 16px -3px rgba(20, 184, 166, 0.10);
+  }
+
+  html.dark body:not(.high-contrast),
+  body.dark:not(.high-contrast) {
+    background: radial-gradient(circle at 18% 12%, rgba(20, 184, 166, 0.09) 0%, transparent 45%),
+                radial-gradient(circle at 82% 48%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 25% 78%, rgba(99, 102, 241, 0.07) 0%, transparent 48%),
+                #090d16;
+    color: #f8fafc;
+    color-scheme: dark;
+  }
+
+  /* Dark mode card surfaces (fallback for non-glass elements) */
+  html.dark:not(.high-contrast) .bg-white:not(.interactive-card):not(.glass-card):not(.sanctuary-card),
+  body.dark:not(.high-contrast) .bg-white:not(.interactive-card):not(.glass-card):not(.sanctuary-card) {
+    background-color: #111827;
+  }
+
+  html.dark:not(.high-contrast) .bg-white\/90:not(.interactive-card):not(.glass-card):not(.sanctuary-card),
+  html.dark:not(.high-contrast) .bg-white\/95:not(.interactive-card):not(.glass-card):not(.sanctuary-card),
+  body.dark:not(.high-contrast) .bg-white\/90:not(.interactive-card):not(.glass-card):not(.sanctuary-card),
+  body.dark:not(.high-contrast) .bg-white\/95:not(.interactive-card):not(.glass-card):not(.sanctuary-card) {
+    background-color: rgba(17, 24, 39, 0.95);
+  }
+
+  /* Dark mode inner surfaces */
+  html.dark:not(.high-contrast) .bg-slate-50,
+  html.dark:not(.high-contrast) .bg-slate-50\/70,
+  html.dark:not(.high-contrast) .bg-slate-50\/80,
+  body.dark:not(.high-contrast) .bg-slate-50,
+  body.dark:not(.high-contrast) .bg-slate-50\/70,
+  body.dark:not(.high-contrast) .bg-slate-50\/80 {
+    background-color: #0f172a;
+  }
+
+  html.dark:not(.high-contrast) .bg-slate-100,
+  body.dark:not(.high-contrast) .bg-slate-100 {
+    background-color: #1e293b;
+  }
+
+  /* Dark mode borders */
+  html.dark:not(.high-contrast) .border-slate-100,
+  html.dark:not(.high-contrast) .border-slate-200,
+  html.dark:not(.high-contrast) .border-slate-300,
+  body.dark:not(.high-contrast) .border-slate-100,
+  body.dark:not(.high-contrast) .border-slate-200,
+  body.dark:not(.high-contrast) .border-slate-300 {
+    border-color: #1e293b;
+  }
+
+  /* Dark mode texts */
+  html.dark:not(.high-contrast) .text-slate-900,
+  body.dark:not(.high-contrast) .text-slate-900 {
+    color: #f8fafc;
+  }
+
+  html.dark:not(.high-contrast) .text-slate-800,
+  html.dark:not(.high-contrast) .text-slate-700,
+  body.dark:not(.high-contrast) .text-slate-800,
+  body.dark:not(.high-contrast) .text-slate-700 {
+    color: #cbd5e1;
+  }
+
+  html.dark:not(.high-contrast) .text-slate-600,
+  html.dark:not(.high-contrast) .text-slate-500,
+  body.dark:not(.high-contrast) .text-slate-600,
+  body.dark:not(.high-contrast) .text-slate-500 {
+    color: #94a3b8;
+  }
+
+  /* Dark mode inputs, textareas, selects */
+  html.dark:not(.high-contrast) input:not([type="checkbox"]):not([type="radio"]),
+  html.dark:not(.high-contrast) textarea,
+  html.dark:not(.high-contrast) select,
+  body.dark:not(.high-contrast) input:not([type="checkbox"]):not([type="radio"]),
+  body.dark:not(.high-contrast) textarea,
+  body.dark:not(.high-contrast) select {
+    background-color: #0f172a;
+    color: #f8fafc;
+    border-color: #26334d;
+  }
+
+  html.dark:not(.high-contrast) input::placeholder,
+  html.dark:not(.high-contrast) textarea::placeholder,
+  body.dark:not(.high-contrast) input::placeholder,
+  body.dark:not(.high-contrast) textarea::placeholder {
+    color: #64748b;
+  }
+
+  /* Scoped Period Tracker Sanctuary Dark Mode (Retains feminine pink sanctuary identity) */
+  html.dark:not(.high-contrast) .period-tracker-page .sanctuary-canvas,
+  body.dark:not(.high-contrast) .period-tracker-page .sanctuary-canvas {
+    background: linear-gradient(180deg, #190e1c 0%, #161124 50%, #0d121f 100%) !important;
+    border-color: rgba(162, 28, 92, 0.3) !important;
+  }
+
+  html.dark:not(.high-contrast) .period-tracker-page .sanctuary-card,
+  body.dark:not(.high-contrast) .period-tracker-page .sanctuary-card {
+    background-color: rgba(30, 20, 38, 0.9) !important;
+    border-color: rgba(190, 24, 93, 0.3) !important;
+    color: #fce7f3 !important;
+  }
+
+  html.dark:not(.high-contrast) .period-tracker-page .text-rose-950,
+  body.dark:not(.high-contrast) .period-tracker-page .text-rose-950 {
+    color: #fce7f3 !important;
+  }
+
+  html.dark:not(.high-contrast) .period-tracker-page .text-rose-900,
+  body.dark:not(.high-contrast) .period-tracker-page .text-rose-900,
+  html.dark:not(.high-contrast) .period-tracker-page .text-rose-800,
+  body.dark:not(.high-contrast) .period-tracker-page .text-rose-800 {
+    color: #fbcfe8 !important;
+  }
+
+  /* High Contrast Accessibility Theme */
+  body.high-contrast {
+    @apply bg-black text-white;
+  }
+
+  body.high-contrast .contrast-card {
+    @apply bg-zinc-950 border-2 border-yellow-400 text-white shadow-none;
+  }
+
+  body.high-contrast .contrast-text-accent {
+    @apply text-yellow-300 font-bold;
+  }
+
+  body.high-contrast .contrast-btn-primary {
+    @apply bg-yellow-400 text-black font-extrabold border-2 border-white hover:bg-yellow-300;
+  }
+
+  body.high-contrast .contrast-btn-secondary {
+    @apply bg-zinc-900 text-yellow-300 border-2 border-yellow-400 hover:bg-zinc-800;
+  }
+
+  body.high-contrast .contrast-badge-green {
+    @apply bg-emerald-950 text-emerald-300 border border-emerald-400;
+  }
+
+  body.high-contrast .contrast-badge-amber {
+    @apply bg-amber-950 text-yellow-300 border border-yellow-400;
+  }
+
+  body.high-contrast .contrast-badge-red {
+    @apply bg-red-950 text-red-300 border border-red-400;
+  }
+}
+
+/* Accessibility Focus Outline for Keyboard Nav */
+:focus-visible {
+  outline: 2px solid #0d9488 !important;
+  outline-offset: 2px !important;
+}
+
+body.high-contrast :focus-visible {
+  outline: 4px solid #facc15 !important;
+  outline-offset: 4px !important;
+}
+
+/* Pulse ring for voice recording */
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 16px rgba(239, 68, 68, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.animate-mic-active {
+  animation: pulseRing 1.6s infinite;
+}
+
+/* Breathing animation for Calm Box */
+@keyframes breatheCycle {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+.animate-breathe {
+  animation: breatheCycle 8s ease-in-out infinite;
+}
+
+/* Screen reader only utility class */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* =============================================================
+   TRANSLUCENT SOFT GLASS CARDS SYSTEM
+   Controlled translucency + backdrop-blur + crisp solid typography
+============================================================= */
+.interactive-card,
+.sanctuary-card,
+.glass-card {
+  position: relative;
+  background-color: var(--glass-bg-card) !important;
+  backdrop-filter: blur(var(--glass-blur-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-md));
+  border-color: var(--glass-border-card) !important;
+  box-shadow: var(--glass-shadow);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 200ms ease,
+              background-color 200ms ease;
+  will-change: transform;
+}
+
+/* Fallback for browsers not supporting backdrop-filter */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .interactive-card,
+  .sanctuary-card,
+  .glass-card {
+    background-color: rgba(255, 255, 255, 0.94) !important;
+  }
+  html.dark:not(.high-contrast) .interactive-card,
+  html.dark:not(.high-contrast) .sanctuary-card,
+  html.dark:not(.high-contrast) .glass-card {
+    background-color: rgba(15, 23, 42, 0.95) !important;
+  }
+}
+
+/* 1. Large Hero / Feature card: slightly more translucent for maximum visual depth */
+.glass-card-hero,
+.interactive-card.glass-card-hero {
+  background-color: var(--glass-bg-hero) !important;
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+  border-color: var(--glass-border-hero) !important;
+}
+
+/* 2. Content-dense card: slightly higher opacity for dense text readability */
+.glass-card-content,
+.interactive-card.glass-card-content {
+  background-color: var(--glass-bg-content) !important;
+  backdrop-filter: blur(var(--glass-blur-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-md));
+}
+
+/* 3. Subtle / secondary inner cards */
+.glass-card-subtle,
+.interactive-card.glass-card-subtle {
+  background-color: var(--glass-bg-subtle) !important;
+  backdrop-filter: blur(var(--glass-blur-sm));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  border-color: var(--glass-border-subtle) !important;
+}
+
+/* 4. Form inputs & textareas inside glass cards */
+.glass-input {
+  background-color: var(--glass-bg-input) !important;
+  backdrop-filter: blur(var(--glass-blur-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-md));
+}
+
+/* =============================================================
+   GRADIENT READABILITY ZONES & CANVAS STACKING HIERARCHY
+   Ensures text is 100% crisp and readable when floating artwork
+   passes behind sections and cards.
+============================================================= */
+.gradient-readability-zone {
+  position: relative;
+}
+
+.gradient-readability-zone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 75%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+html.dark .gradient-readability-zone::before {
+  background: radial-gradient(circle at 50% 40%, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.18) 75%, transparent 100%);
+}
+
+/* Layering tokens for clean stacking */
+.canvas-layer-bg { z-index: 0; }
+.canvas-layer-art { z-index: 1; pointer-events: none; }
+.canvas-layer-surface { z-index: 2; }
+.canvas-layer-content { z-index: 3; }
+.canvas-layer-controls { z-index: 4; }
+
+/* Interactive Card Hover & Active States */
+.interactive-card:hover,
+.sanctuary-card:hover,
+.glass-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--glass-border-hover) !important;
+  box-shadow: var(--glass-shadow-hover);
+}
+
+.interactive-card:active,
+.sanctuary-card:active,
+.glass-card:active {
+  transform: translateY(0);
+}
+
+/* Accessibility: High-Contrast mode override to solid opaque */
+.high-contrast .interactive-card,
+.high-contrast .sanctuary-card,
+.high-contrast .glass-card,
+.high-contrast .glass-card-hero,
+.high-contrast .glass-card-content {
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-color: #000000 !important;
+}
+
+html.dark .high-contrast .interactive-card,
+html.dark .high-contrast .sanctuary-card,
+html.dark .high-contrast .glass-card,
+html.dark .high-contrast .glass-card-hero,
+html.dark .high-contrast .glass-card-content {
+  background-color: #000000 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-color: #ffffff !important;
+}
+
+/* Subtle Interactive Buttons & Elements */
+.interactive-button {
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.interactive-button:hover {
+  transform: translateY(-1.5px);
+}
+
+.interactive-button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Custom Scrollbars */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+html.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.5);
+}
+
+/* Accessibility: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .interactive-card:hover,
+  .interactive-card:active,
+  .sanctuary-card:hover,
+  .sanctuary-card:active,
+  .interactive-button:hover,
+  .interactive-button:active,
+  .float-drift-1,
+  .float-drift-2,
+  .float-drift-3,
+  .float-drift-4 {
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Atmospheric Floating Thematic Objects Drifting Animations
+   Calm, organic, GPU-accelerated translate3d + subtle rotate
+   ========================================================================== */
+@keyframes floatDrift1 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  35% {
+    transform: translate3d(14px, -22px, 0) rotate(4deg);
+  }
+  70% {
+    transform: translate3d(-10px, -10px, 0) rotate(-3deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes floatDrift2 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  40% {
+    transform: translate3d(-18px, 18px, 0) rotate(-5deg);
+  }
+  75% {
+    transform: translate3d(12px, 8px, 0) rotate(3deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes floatDrift3 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(16px, 24px, 0) rotate(5deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes floatDrift4 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-16px, -20px, 0) rotate(-6deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+.float-drift-1 {
+  animation: floatDrift1 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.float-drift-2 {
+  animation: floatDrift2 21s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.float-drift-3 {
+  animation: floatDrift3 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.float-drift-4 {
+  animation: floatDrift4 19s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
