@@ -361,7 +361,6 @@ export const DoctorsNearbyView: React.FC = () => {
       {/* 1. Header Banner */}
       <SectionHero
         title="Find Doctors & Clinics"
-        description="Verified healthcare facilities with GPS distance calculation and practical search filters."
         badge={{
           icon: Stethoscope,
           text: 'Verified Specialists',
@@ -574,9 +573,11 @@ export const DoctorsNearbyView: React.FC = () => {
               <Building2 className="w-6 h-6 text-teal-600 dark:text-teal-400" />
               <span>Available Specialists ({radiusResult.totalFound})</span>
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-0.5">
-              {radiusResult.message}
-            </p>
+            {radiusResult.message && (
+              <p className="text-slate-500 dark:text-slate-400 text-xs font-normal mt-0.5">
+                {radiusResult.message}
+              </p>
+            )}
           </div>
 
           {/* Toggle buttons: [List View] / [Map View] */}

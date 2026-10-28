@@ -309,7 +309,6 @@ export const FoodNutritionView: React.FC = () => {
       {/* Section Hero */}
       <SectionHero
         title="Food & Nutrition Calculator"
-        description="Estimate calories, protein, carbs, and fats from your food photo or type ingredients manually."
         badge={{
           icon: UtensilsCrossed,
           text: 'Nutrition Intelligence',
@@ -367,9 +366,6 @@ export const FoodNutritionView: React.FC = () => {
                 <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
                   Analyze Your Meal Photo
                 </h2>
-                <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-                  Upload a photo of your meal or capture one right now with your camera. HealYaar preserves your exact original photograph and estimates calories, protein, carbs, fat, and fiber.
-                </p>
               </div>
 
               {/* Action Buttons: Upload or Camera */}
@@ -583,14 +579,9 @@ export const FoodNutritionView: React.FC = () => {
         <div className="space-y-6">
           <section className="interactive-card bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
-              <div>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                  Enter Ingredients Manually
-                </h2>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">
-                  Type your meal ingredients in natural language or pick from common pantry staples.
-                </p>
-              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                Enter Ingredients Manually
+              </h2>
 
               {/* Servings Counter */}
               <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-2 rounded-2xl border border-slate-200 dark:border-slate-700">

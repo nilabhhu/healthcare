@@ -8,7 +8,7 @@ export interface SectionHeroBadgeConfig {
 
 export interface SectionHeroProps {
   title: string;
-  description: string;
+  description?: string;
   badge?: string | SectionHeroBadgeConfig;
   badgeIcon?: React.ReactNode;
   illustration?: React.ReactNode;
@@ -84,16 +84,18 @@ export const SectionHero: React.FC<SectionHeroProps> = ({
       className={`interactive-card glass-card-hero rounded-3xl p-6 sm:p-8 border border-white/80 dark:border-slate-800/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative overflow-hidden group ${className}`}
     >
       {/* Left Content */}
-      <div className="space-y-2 max-w-2xl min-w-0">
+      <div className="space-y-1.5 max-w-2xl min-w-0">
         {renderBadge()}
 
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
           {title}
         </h1>
 
-        <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-          {description}
-        </p>
+        {description ? (
+          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-normal">
+            {description}
+          </p>
+        ) : null}
 
         {finalAction && <div className="pt-2">{finalAction}</div>}
       </div>

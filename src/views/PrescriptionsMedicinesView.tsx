@@ -564,7 +564,6 @@ export const PrescriptionsMedicinesView: React.FC = () => {
       {/* Section Hero */}
       <SectionHero
         title="Prescriptions & Medicines AI"
-        description="Scan prescriptions, review doctor instructions, set medication reminders, and inquire with nearby pharmacies."
         badge={{
           icon: Pill,
           text: 'Prescription OCR',
@@ -628,13 +627,10 @@ export const PrescriptionsMedicinesView: React.FC = () => {
                   <FileText className="w-8 h-8" />
                 </div>
 
-                <div className="max-w-xl mx-auto space-y-2">
+                <div className="max-w-xl mx-auto">
                   <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                     Upload or Capture Your Prescription
                   </h2>
-                  <p className="text-sm sm:text-base text-slate-600">
-                    Upload a photo or scanned copy of your doctor's prescription. HealYaar extracts medication names, dosages, timings, and schedules for your review.
-                  </p>
                 </div>
 
                 {isAnalyzing ? (
@@ -675,43 +671,43 @@ export const PrescriptionsMedicinesView: React.FC = () => {
 
               {/* Informational Trust & Feature Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="interactive-card p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
+                <div className="interactive-card p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1.5">
                   <div className="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <h3 className="font-extrabold text-sm text-slate-900">100% On-Device Privacy</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Your prescription is scanned and analyzed directly on your device. Medical notes are never uploaded or stored on third-party cloud servers.
+                  <p className="text-xs text-slate-500 font-normal">
+                    Processed securely on your device
                   </p>
                 </div>
 
-                <div className="interactive-card p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
+                <div className="interactive-card p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1.5">
                   <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
                     <FileText className="w-5 h-5" />
                   </div>
                   <h3 className="font-extrabold text-sm text-slate-900">AI OCR Extraction</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Automatically extracts medicine names, strengths, dosages, frequencies, and doctor instructions into clean editable cards.
+                  <p className="text-xs text-slate-500 font-normal">
+                    Detects medicines and schedules
                   </p>
                 </div>
 
-                <div className="interactive-card p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
+                <div className="interactive-card p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1.5">
                   <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
                     <AlertTriangle className="w-5 h-5" />
                   </div>
                   <h3 className="font-extrabold text-sm text-slate-900">Handwriting Safety</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Doctor handwriting can be unpredictable. HealYaar highlights any low-confidence text so you can verify it directly against your slip.
+                  <p className="text-xs text-slate-500 font-normal">
+                    Highlights low-confidence text
                   </p>
                 </div>
 
-                <div className="interactive-card p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
+                <div className="interactive-card p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1.5">
                   <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
                     <BellRing className="w-5 h-5" />
                   </div>
                   <h3 className="font-extrabold text-sm text-slate-900">Smart Pill Reminders</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    With one click, convert verified prescription schedules into daily medication reminders with timely alarms.
+                  <p className="text-xs text-slate-500 font-normal">
+                    Converts doses into alarms
                   </p>
                 </div>
               </div>
@@ -1575,14 +1571,9 @@ export const PrescriptionsMedicinesView: React.FC = () => {
         <div className="space-y-6">
           <section className="interactive-card bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200">
-              <div>
-                <h3 className="text-2xl font-black text-slate-900">
-                  Demo Pharmacy Cart
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-500">
-                  Prototype checkout demonstrating prescription verification workflows.
-                </p>
-              </div>
+              <h3 className="text-2xl font-black text-slate-900">
+                Demo Pharmacy Cart
+              </h3>
 
               {cart.length > 0 && (
                 <button

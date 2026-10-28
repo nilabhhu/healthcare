@@ -361,7 +361,6 @@ export const ReportsView: React.FC = () => {
       {pageState !== 'results' && (
         <SectionHero
           title="Medical Reports"
-          description="Upload your medical report to translate clinical terms, review standard ranges, and generate focused questions for your doctor."
           badge={{
             icon: FileSpreadsheet,
             text: 'Clinical Records',

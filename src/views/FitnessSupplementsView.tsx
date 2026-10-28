@@ -301,7 +301,6 @@ export const FitnessSupplementsView: React.FC = () => {
       {/* 1. Header */}
       <SectionHero
         title="Dietary Supplements & Evidence Library"
-        description="Evidence-based ratings and personalized nutritional considerations for common wellness concerns."
         badge={{
           icon: Sparkles,
           text: 'Non-Diagnostic Guidance',
@@ -322,9 +321,6 @@ export const FitnessSupplementsView: React.FC = () => {
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
             Describe Your Problem or Wellness Goal
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">
-            Tell us what you're experiencing or trying to improve. We'll highlight relevant nutrients, whole food sources to try first, and safety rules before considering pills.
-          </p>
         </div>
 
         {/* Input Form */}

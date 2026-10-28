@@ -352,12 +352,12 @@ export const LoginView: React.FC = () => {
             </div>
 
             {/* Welcoming Headline & Supporting Copy */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
                 Welcome to HealYaar
               </h1>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                Your health, made simpler. Access your personal health records, symptom triage, medication reminders, and verified plain-language answers safely on your device.
+              <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-normal">
+                Private, accessible health companion
               </p>
             </div>
           </div>
@@ -404,19 +404,23 @@ export const LoginView: React.FC = () => {
             )}
 
             {/* Form Header */}
-            <div className="space-y-1.5 text-left">
+            <div className="space-y-1 text-left">
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
                 {authMode === 'login' && 'Welcome to HealYaar'}
                 {authMode === 'signup' && 'Create your account'}
                 {authMode === 'forgot_password' && 'Reset your password'}
                 {authMode === 'reset_password' && 'Set a new password'}
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 text-sm">
-                {authMode === 'login' && 'Your health, made simpler. Sign in with your email and password.'}
-                {authMode === 'signup' && 'Join HealYaar for private, personalized health guidance.'}
-                {authMode === 'forgot_password' && 'Enter your email to receive secure reset instructions.'}
-                {authMode === 'reset_password' && 'Enter your new password below.'}
-              </p>
+              {authMode === 'forgot_password' && (
+                <p className="text-slate-500 dark:text-slate-400 text-xs font-normal">
+                  Enter your email to receive a secure reset link.
+                </p>
+              )}
+              {authMode === 'reset_password' && (
+                <p className="text-slate-500 dark:text-slate-400 text-xs font-normal">
+                  Enter your new password below.
+                </p>
+              )}
             </div>
 
             {/* Error Message Alert Banner */}

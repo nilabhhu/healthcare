@@ -161,7 +161,6 @@ export const AssistantView: React.FC = () => {
       {/* Header with Accessibility, Vault & Actions */}
       <SectionHero
         title="AI Health Assistant"
-        description="Grounded in your private Health Knowledge Vault and clinical reference guidelines."
         badge={{
           icon: HeartHandshake,
           text: 'Accessible Care Companion',

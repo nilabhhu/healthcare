@@ -205,7 +205,6 @@ export const SymptomGuidanceView: React.FC = () => {
         badge="Clinical Guidance"
         badgeIcon={<Activity className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />}
         title="Symptom Guidance"
-        description="Describe what you are experiencing to receive plain explanations, safety red flags, safe self-care steps, and doctor recommendations."
         illustration={<SymptomGuidanceIllustration size="lg" />}
       />
 
@@ -214,15 +213,10 @@ export const SymptomGuidanceView: React.FC = () => {
       ============================================================= */}
       <section className="interactive-card bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
-              <HeartPulse className="w-6 h-6 text-teal-600" />
-              <span>Describe your problem</span>
-            </h2>
-            <p className="text-slate-600 dark:text-slate-300 text-sm mt-0.5">
-              Type or speak naturally. You do not need to fill out a long checklist first.
-            </p>
-          </div>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <HeartPulse className="w-6 h-6 text-teal-600" />
+            <span>Describe your problem</span>
+          </h2>
 
           <span className="text-xs font-semibold px-3 py-1 rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 w-fit">
             Text or Voice 🎙

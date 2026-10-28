@@ -161,7 +161,6 @@ export const MentalWellbeingView: React.FC = () => {
       {/* Header & Sub-Navigation */}
       <SectionHero
         title="Mental Wellbeing & Calm Space"
-        description="Evidence-based relaxation techniques, grounding exercises, and educational clarity."
         badge={{
           icon: Brain,
           text: 'Mind & Calmness',
@@ -306,8 +305,8 @@ export const MentalWellbeingView: React.FC = () => {
             <h3 className="text-2xl font-black text-slate-900 dark:text-white">
               5-4-3-2-1 Sensory Grounding Technique
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-              When racing thoughts or panic spike, this exercise engages your five physical senses to bring your attention safely back into the present room.
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-normal mt-0.5">
+              5-step focus exercise for calm and presence
             </p>
           </div>
 

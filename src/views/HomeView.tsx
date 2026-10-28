@@ -268,9 +268,6 @@ export const HomeView: React.FC = () => {
                 Encrypted Vault
               </span>
             </h1>
-            <p className="text-teal-100/90 text-xs mt-0.5">
-              Friendly, plain-language guidance with zero medical jargon.
-            </p>
           </div>
         </div>
 
@@ -424,9 +421,6 @@ export const HomeView: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
               Describe your symptoms
             </h2>
-            <p className="text-slate-600 dark:text-slate-300 text-sm">
-              Type or speak what hurts. We'll identify possible causes, warning signs, and next steps.
-            </p>
           </div>
 
           <div className="hidden sm:flex flex-shrink-0 p-2 rounded-2xl glass-card-subtle border border-white/60 dark:border-slate-700/50">
@@ -515,14 +509,9 @@ export const HomeView: React.FC = () => {
 
       {/* 4. HEALTH TOOLS GRID */}
       <section className="space-y-4 relative z-2">
-        <div className="space-y-0.5">
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-            Health & Self-Care Tools
-          </h2>
-          <p className="text-slate-500 text-xs sm:text-sm">
-            Accessible, encrypted tools for your daily health management.
-          </p>
-        </div>
+        <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+          Health & Self-Care Tools
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
           {toolCards.map((card) => (
@@ -565,12 +554,9 @@ export const HomeView: React.FC = () => {
       <section className="interactive-card glass-card rounded-3xl border border-white/70 dark:border-slate-700/50 p-6 shadow-glass relative z-2 space-y-4">
         <div className="flex items-center gap-2.5">
           <BookOpen className="w-5 h-5 text-teal-600" />
-          <div>
-            <h2 className="text-lg font-black text-slate-900 dark:text-white">
-              Medical Terms in Plain Language
-            </h2>
-            <p className="text-xs text-slate-500">Everyday translations for common terms.</p>
-          </div>
+          <h2 className="text-lg font-black text-slate-900 dark:text-white">
+            Medical Terms in Plain Language
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
@@ -609,9 +595,6 @@ export const HomeView: React.FC = () => {
             <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
               Ask anything about your health
             </h2>
-            <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm">
-              Grounded in your private vault and validated clinical guidelines.
-            </p>
           </div>
 
           <button
