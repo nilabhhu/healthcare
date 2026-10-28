@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { NavTab, SupportedLanguage } from '../types';
 import { regionalOptions } from '../i18n/translations';
 import { VOICE_LONG_PRESS_MS } from '../context/VoiceAssistantContext';
+import { Tooltip } from './ui/Tooltip';
 import {
   Heart,
   Home,
@@ -326,54 +327,57 @@ export const Navbar: React.FC = () => {
           {/* Right Controls: Voice Toggle, Theme, Text Size, Language */}
           <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
             {/* Obvious Microphone Button */}
-            <button
-              onClick={handleMicToggle}
-              className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl font-bold text-xs transition-all shadow-2xs active:scale-95 border ${
-                isListening
-                  ? 'bg-rose-600 border-rose-700 text-white animate-mic-active'
-                  : 'bg-teal-50 dark:bg-teal-950/50 border-teal-200 dark:border-teal-800 text-teal-800 dark:text-teal-300 hover:bg-teal-100 dark:hover:bg-teal-900/40'
-              }`}
-              title={isListening ? t.stopListening : t.tapToSpeak}
-              aria-label={isListening ? t.stopListening : t.tapToSpeak}
-            >
-              {isListening ? (
-                <>
-                  <MicOff className="w-4 h-4 text-white animate-pulse" />
-                  <span className="font-extrabold">{t.stopListening}</span>
-                </>
-              ) : (
-                <>
-                  <Mic className="w-4 h-4 text-teal-600 dark:text-teal-400" />
-                  <span className="hidden sm:inline">{t.tapToSpeak}</span>
-                  <span className="sm:hidden">Voice</span>
-                </>
-              )}
-            </button>
+            <Tooltip content={isListening ? 'Stop voice recording' : 'Start voice assistant'} position="bottom">
+              <button
+                onClick={handleMicToggle}
+                className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl font-bold text-xs transition-all shadow-2xs active:scale-95 border ${
+                  isListening
+                    ? 'bg-rose-600 border-rose-700 text-white animate-mic-active'
+                    : 'bg-teal-50 dark:bg-teal-950/50 border-teal-200 dark:border-teal-800 text-teal-800 dark:text-teal-300 hover:bg-teal-100 dark:hover:bg-teal-900/40'
+                }`}
+                aria-label={isListening ? t.stopListening : t.tapToSpeak}
+              >
+                {isListening ? (
+                  <>
+                    <MicOff className="w-4 h-4 text-white animate-pulse" />
+                    <span className="font-extrabold">{t.stopListening}</span>
+                  </>
+                ) : (
+                  <>
+                    <Mic className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                    <span className="hidden sm:inline">{t.tapToSpeak}</span>
+                    <span className="sm:hidden">Voice</span>
+                  </>
+                )}
+              </button>
+            </Tooltip>
 
             {/* Theme Toggle (Dark / Light) */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700 transition-colors"
-              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-amber-400" />
-              ) : (
-                <Moon className="w-4 h-4 text-teal-600" />
-              )}
-            </button>
+            <Tooltip content={theme === 'dark' ? 'Light mode' : 'Dark mode'} position="bottom">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700 transition-colors"
+                aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-4 h-4 text-amber-400" />
+                ) : (
+                  <Moon className="w-4 h-4 text-teal-600" />
+                )}
+              </button>
+            </Tooltip>
 
             {/* Text Size Switcher */}
-            <button
-              onClick={cycleTextSize}
-              className="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700 font-bold text-xs transition-colors"
-              title={t.textSize}
-              aria-label={`Change text size. Currently ${textSize}`}
-            >
-              <Type className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
-              <span>{textSize === 'normal' ? 'A' : textSize === 'large' ? 'A+' : 'A++'}</span>
-            </button>
+            <Tooltip content={`Text size (${textSize})`} position="bottom">
+              <button
+                onClick={cycleTextSize}
+                className="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700 font-bold text-xs transition-colors"
+                aria-label={`Change text size. Currently ${textSize}`}
+              >
+                <Type className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+                <span>{textSize === 'normal' ? 'A' : textSize === 'large' ? 'A+' : 'A++'}</span>
+              </button>
+            </Tooltip>
 
             {/* Language Selector Dropdown */}
             <div className="relative">

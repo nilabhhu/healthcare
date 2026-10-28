@@ -125,6 +125,10 @@ export interface DoctorListing {
   rating?: number;
   address?: string;
   contactPhone?: string;
+  verificationSource?: string;
+  nextAvailableSlot?: string;
+  visitTypes?: ('In-person Clinic' | 'Teleconsultation')[];
+  bookingDirectlyConnected?: boolean;
 }
 
 export interface SupplementInfo {
@@ -215,10 +219,14 @@ export interface ReminderItem {
   title: string;
   type: 'medicine' | 'appointment' | 'water' | 'vitals';
   time: string; // HH:mm
+  date?: string; // YYYY-MM-DD
   repeatDays: string[]; // e.g. ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   instructions: string;
   active: boolean;
   createdDate: string;
+  doctorName?: string;
+  clinicName?: string;
+  isPersonalReminder?: boolean;
 }
 
 export interface PeriodCycleEntry {

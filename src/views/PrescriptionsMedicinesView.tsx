@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { SectionHero } from '../components/ui/SectionHero';
 import { PrescriptionsIllustration } from '../components/ContextualIllustrations';
+import { Tooltip } from '../components/ui/Tooltip';
 import {
   syntheticPrescriptions,
   syntheticMedicineCatalog,
@@ -14,7 +15,7 @@ import {
   PharmacyListing
 } from '../types';
 import { prescriptionService } from '../services/prescriptionService';
-import { indexPrescription } from '../services/rag/ragVaultService';
+import { indexPrescription, deleteChunksBySource } from '../services/rag/ragVaultService';
 import {
   getBrowserCurrentPosition,
   reverseGeocodeCoordinates,
@@ -50,12 +51,12 @@ import {
   Edit3,
   Camera,
   Eye,
-  RotateCcw
+  RotateCcw,
+  History
 } from 'lucide-react';
 
 export const PrescriptionsMedicinesView: React.FC = () => {
   const {
-    t,
     requestPermission,
     permissions,
     showToast,
@@ -77,22 +78,27 @@ export const PrescriptionsMedicinesView: React.FC = () => {
   const [uploadedImageBlobUrl, setUploadedImageBlobUrl] = useState<string | null>(null);
   const [showOriginalModal, setShowOriginalModal] = useState<boolean>(false);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [prescriptionHistory, setPrescriptionHistory] = useState<SyntheticPrescription[]>([]);
 
-  // Restore user's saved prescription from cloud/local if available
+  // Restore user's saved prescription and history from cloud/local if available
   useEffect(() => {
     let isMounted = true;
     if (currentUser?.id) {
       prescriptionService.getPrescriptions(currentUser.id).then((savedList) => {
-        if (isMounted && savedList && savedList.length > 0 && !selectedRx) {
-          const latest = savedList[0];
-          setSelectedRx(latest);
-          setEditableMedicines(latest.medicines);
+        if (isMounted && savedList) {
+          setPrescriptionHistory(savedList);
+          if (savedList.length > 0 && !selectedRx) {
+            const latest = savedList[0];
+            setSelectedRx(latest);
+            setEditableMedicines(latest.medicines);
+          }
         }
       });
     } else {
       setSelectedRx(null);
       setEditableMedicines([]);
       setUploadedImageBlobUrl(null);
+      setPrescriptionHistory([]);
     }
     return () => {
       isMounted = false;
@@ -217,6 +223,7 @@ export const PrescriptionsMedicinesView: React.FC = () => {
         setRemindersCreatedSuccess(false);
         setIsAnalyzing(false);
         prescriptionService.savePrescription(currentUser?.id || '', newRx, file);
+        setPrescriptionHistory((prev) => [newRx, ...prev.filter((r) => r.id !== newRx.id)]);
         if (currentUser?.id) {
           indexPrescription(currentUser.id, {
             id: newRx.id,
@@ -273,6 +280,32 @@ export const PrescriptionsMedicinesView: React.FC = () => {
       // ignore
     }
     showToast('Prescription cleared.');
+  };
+
+  /**
+   * Select a prescription from history
+   */
+  const handleSelectHistoricalRx = (rx: SyntheticPrescription) => {
+    setSelectedRx(rx);
+    setEditableMedicines(rx.medicines);
+    setRemindersCreatedSuccess(false);
+    showToast(`Loaded prescription from ${rx.date || 'history'}.`);
+  };
+
+  /**
+   * Delete a prescription from history
+   */
+  const handleDeleteHistoricalRx = async (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPrescriptionHistory((prev) => prev.filter((r) => r.id !== id));
+    if (selectedRx?.id === id) {
+      handleClearPrescription();
+    }
+    await prescriptionService.deletePrescription(currentUser?.id || '', id);
+    if (currentUser?.id) {
+      deleteChunksBySource(currentUser.id, id).catch((err) => console.warn('RAG chunk deletion warning:', err));
+    }
+    showToast('Prescription removed from history.');
   };
 
   /**
@@ -727,6 +760,57 @@ export const PrescriptionsMedicinesView: React.FC = () => {
                 <strong>Doctor's Advice:</strong> {selectedRx.generalAdvice}
               </div>
 
+              {/* Status Progression Bar */}
+              <div className="flex flex-wrap items-center gap-2 text-xs py-1 px-3 bg-slate-50 rounded-xl border border-slate-200">
+                <span className="font-bold text-slate-500 uppercase text-[10px] mr-1">Status:</span>
+                <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-md font-bold flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  <span>Uploaded</span>
+                </span>
+                <ChevronRight className="w-3 h-3 text-slate-400" />
+                <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-md font-bold flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  <span>Extracted ({editableMedicines.length})</span>
+                </span>
+                <ChevronRight className="w-3 h-3 text-slate-400" />
+                <span
+                  className={`px-2 py-0.5 rounded-md font-bold flex items-center gap-1 ${
+                    editableMedicines.some((m) => m.confidence === 'low')
+                      ? 'bg-amber-100 text-amber-800 ring-1 ring-amber-300'
+                      : 'bg-emerald-100 text-emerald-800'
+                  }`}
+                >
+                  {editableMedicines.some((m) => m.confidence === 'low') ? (
+                    <>
+                      <AlertTriangle className="w-3 h-3 text-amber-700" />
+                      <span>Needs Review</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="w-3 h-3" />
+                      <span>Verified</span>
+                    </>
+                  )}
+                </span>
+                <ChevronRight className="w-3 h-3 text-slate-400" />
+                <span
+                  className={`px-2 py-0.5 rounded-md font-bold flex items-center gap-1 ${
+                    remindersCreatedSuccess
+                      ? 'bg-emerald-100 text-emerald-800'
+                      : 'bg-slate-200 text-slate-600'
+                  }`}
+                >
+                  {remindersCreatedSuccess ? (
+                    <>
+                      <CheckCircle2 className="w-3 h-3" />
+                      <span>Reminders Scheduled</span>
+                    </>
+                  ) : (
+                    <span>Reminders Pending</span>
+                  )}
+                </span>
+              </div>
+
               {/* Extracted Medicines List */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -1035,6 +1119,72 @@ export const PrescriptionsMedicinesView: React.FC = () => {
               )}
             </section>
           )}
+
+          {/* C. PRESCRIPTION HISTORY SECTION */}
+          <section className="interactive-card bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <History className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+                <h3 className="font-extrabold text-slate-900 dark:text-white text-lg">
+                  Prescription History ({prescriptionHistory.length})
+                </h3>
+              </div>
+              <span className="text-xs text-slate-500 font-medium">Saved securely for your health records</span>
+            </div>
+
+            {prescriptionHistory.length === 0 ? (
+              <div className="p-8 text-center bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 space-y-2">
+                <FileText className="w-8 h-8 text-slate-400 mx-auto" />
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No Prescriptions Uploaded Yet</p>
+                <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                  When you upload or scan a doctor's prescription, it is securely archived here so you can review medicines and dosage anytime.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {prescriptionHistory.map((rx) => {
+                  const isCurrent = selectedRx?.id === rx.id;
+                  return (
+                    <div
+                      key={rx.id}
+                      onClick={() => handleSelectHistoricalRx(rx)}
+                      className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
+                        isCurrent
+                          ? 'bg-teal-50/80 dark:bg-teal-950/40 border-teal-400 shadow-xs ring-2 ring-teal-200'
+                          : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 hover:border-teal-300'
+                      }`}
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-bold text-teal-800 dark:text-teal-300">
+                            {rx.date || 'Saved slip'}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={(e) => handleDeleteHistoricalRx(rx.id, e)}
+                            className="p-1 text-slate-400 hover:text-rose-600 rounded-md"
+                            title="Delete prescription"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                        <h4 className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
+                          {rx.doctorName || 'Prescription Slip'}
+                        </h4>
+                        <p className="text-xs text-slate-500 truncate">
+                          {rx.clinicName || 'Clinic'} • {rx.medicines?.length || 0} medicines
+                        </p>
+                      </div>
+                      <div className="pt-2 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-teal-600 dark:text-teal-400">
+                        <span>{isCurrent ? 'Viewing Active' : 'Review Slip'}</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
         </div>
       )}
 

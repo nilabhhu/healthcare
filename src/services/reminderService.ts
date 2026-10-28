@@ -35,10 +35,14 @@ export const reminderService = {
         title: row.title,
         type: row.type || 'medicine',
         time: row.time,
+        date: row.date || row.appointment_date,
         repeatDays: row.repeat_days || [],
         instructions: row.instructions || '',
         active: row.active ?? true,
-        createdDate: row.created_date || row.created_at?.slice(0, 10) || new Date().toISOString().slice(0, 10)
+        createdDate: row.created_date || row.created_at?.slice(0, 10) || new Date().toISOString().slice(0, 10),
+        doctorName: row.doctor_name || row.doctorName,
+        clinicName: row.clinic_name || row.clinicName,
+        isPersonalReminder: row.is_personal_reminder ?? row.isPersonalReminder ?? true
       }));
     } catch (err) {
       console.warn('reminderService.getReminders exception:', err);
@@ -87,10 +91,14 @@ export const reminderService = {
         title: data.title,
         type: data.type,
         time: data.time,
+        date: localReminder.date,
         repeatDays: data.repeat_days,
         instructions: data.instructions,
         active: data.active,
-        createdDate: data.created_date
+        createdDate: data.created_date,
+        doctorName: localReminder.doctorName,
+        clinicName: localReminder.clinicName,
+        isPersonalReminder: localReminder.isPersonalReminder
       };
     } catch (err) {
       console.warn('reminderService.addReminder exception:', err);

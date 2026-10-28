@@ -6,6 +6,7 @@ import { SectionHero } from '../components/ui/SectionHero';
 import { MedicalReportsIllustration } from '../components/ContextualIllustrations';
 import { medicalReportService } from '../services/medicalReportService';
 import { indexMedicalReport, deleteChunksBySource } from '../services/rag/ragVaultService';
+import { Tooltip } from '../components/ui/Tooltip';
 import {
   FileSpreadsheet,
   UploadCloud,
@@ -518,31 +519,35 @@ export const ReportsView: React.FC = () => {
             </button>
 
             <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setIsOriginalModalOpen(true)}
-                className="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold text-xs flex items-center gap-1.5"
-              >
-                <Eye className="w-4 h-4" />
-                <span>View Original Report</span>
-              </button>
+              <Tooltip content="Inspect original uploaded document" position="top">
+                <button
+                  type="button"
+                  onClick={() => setIsOriginalModalOpen(true)}
+                  className="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold text-xs flex items-center gap-1.5"
+                >
+                  <Eye className="w-4 h-4 text-teal-600" />
+                  <span>View Original Report</span>
+                </button>
+              </Tooltip>
 
-              <button
-                type="button"
-                onClick={() => {
-                  if (isAudioPlaying) {
-                    stopSpeaking();
-                  } else {
-                    speakText(
-                      `Report summary for ${activeReport.title}. ${activeReport.summary}`
-                    );
-                  }
-                }}
-                className="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold text-xs flex items-center gap-1.5"
-              >
-                {isAudioPlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                <span>{isAudioPlaying ? 'Stop Audio' : 'Read Summary'}</span>
-              </button>
+              <Tooltip content={isAudioPlaying ? 'Stop audio' : 'Listen with voice'} position="top">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (isAudioPlaying) {
+                      stopSpeaking();
+                    } else {
+                      speakText(
+                        `Report summary for ${activeReport.title}. ${activeReport.summary}`
+                      );
+                    }
+                  }}
+                  className="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold text-xs flex items-center gap-1.5"
+                >
+                  {isAudioPlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                  <span>{isAudioPlaying ? 'Stop Audio' : 'Read Summary'}</span>
+                </button>
+              </Tooltip>
             </div>
           </div>
 
@@ -734,14 +739,16 @@ export const ReportsView: React.FC = () => {
                     >
                       View Results
                     </button>
-                    <button
-                      type="button"
-                      onClick={(e) => handleDeleteHistoricalReport(rep.id, e)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 transition-colors"
-                      title="Delete from history"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    <Tooltip content="Delete report from history" position="top">
+                      <button
+                        type="button"
+                        onClick={(e) => handleDeleteHistoricalReport(rep.id, e)}
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 transition-colors"
+                        aria-label="Delete report"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </Tooltip>
                   </div>
                 </div>
               ))}

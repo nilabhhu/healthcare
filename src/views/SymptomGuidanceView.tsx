@@ -21,6 +21,7 @@ import {
 import { NavTab } from '../types';
 import { SectionHero } from '../components/ui/SectionHero';
 import { SymptomGuidanceIllustration } from '../components/ContextualIllustrations';
+import { Tooltip } from '../components/ui/Tooltip';
 import {
   analyzeProblemDescription,
   SymptomAnalysisResult
@@ -256,23 +257,24 @@ export const SymptomGuidanceView: React.FC = () => {
               )}
 
               {/* Dedicated Symptom Microphone Button */}
-              <button
-                type="button"
-                onClick={handleToggleSymptomVoice}
-                className={`p-2.5 rounded-xl transition-all shadow-sm flex items-center justify-center ${
-                  isSymptomVoiceActive || isListening
-                    ? 'bg-red-600 text-white animate-pulse'
-                    : 'bg-teal-50 dark:bg-teal-950/70 text-teal-700 dark:text-teal-300 hover:bg-teal-100 border border-teal-200 dark:border-teal-800'
-                }`}
-                title="Speak your problem (Symptom Voice Input)"
-                aria-label="Speak your problem"
-              >
-                {isSymptomVoiceActive || isListening ? (
-                  <MicOff className="w-5 h-5" />
-                ) : (
-                  <Mic className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-                )}
-              </button>
+              <Tooltip content={isSymptomVoiceActive || isListening ? 'Stop recording' : 'Speak your symptoms'} position="top">
+                <button
+                  type="button"
+                  onClick={handleToggleSymptomVoice}
+                  className={`p-2.5 rounded-xl transition-all shadow-sm flex items-center justify-center ${
+                    isSymptomVoiceActive || isListening
+                      ? 'bg-red-600 text-white animate-pulse'
+                      : 'bg-teal-50 dark:bg-teal-950/70 text-teal-700 dark:text-teal-300 hover:bg-teal-100 border border-teal-200 dark:border-teal-800'
+                  }`}
+                  aria-label="Speak your problem"
+                >
+                  {isSymptomVoiceActive || isListening ? (
+                    <MicOff className="w-5 h-5" />
+                  ) : (
+                    <Mic className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+                  )}
+                </button>
+              </Tooltip>
             </div>
           </div>
 
